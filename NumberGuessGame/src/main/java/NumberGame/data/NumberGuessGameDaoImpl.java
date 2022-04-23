@@ -211,6 +211,22 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         // Return the results list
         return results;
     }
+
+    @Override
+    public int getAnswerFromId(int answerId) {
+        // Create sql statement
+        final String sql = "SELECT * FROM AllPossibleAnswers WHERE answerId = "
+                + answerId + ";";
+        
+        // Create a list to hold the single result value
+        List<Integer> results;
+        
+        // Execute the query and store results in list
+        results = jdbcTemplate.query(sql, new AnswerMapper());
+        
+        // Return the element within the results list
+        return results.get(0);
+    }
     
     
     /**
@@ -249,6 +265,26 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
             return roundId;
         }
         
+    }
+    
+    
+    /**
+     * Creates a mapping class to map, then extract the four digit answer that
+     *   is associated with an answerId
+     */
+    private static final class AnswerMapper implements RowMapper<Integer>{
+
+        @Override
+        public Integer mapRow(ResultSet rs, int i) throws SQLException {
+            // Create new variable to hold round id data
+            int answer;
+            
+            // Read in the round id from the result set object
+            answer = rs.getInt("numberValue");
+            
+            // Return the roundId
+            return answer;
+        }    
     }
     
     

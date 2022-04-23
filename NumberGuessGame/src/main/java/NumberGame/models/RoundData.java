@@ -16,6 +16,9 @@ public class RoundData {
     
     
     //constructor
+    public RoundData(){
+        
+    }   
     
     //need to fix this so that it passes in a properly formatted LocalDate object
     public RoundData(int id, int guess, String results, LocalDate time){
