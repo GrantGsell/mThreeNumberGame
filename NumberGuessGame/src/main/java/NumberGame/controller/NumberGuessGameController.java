@@ -1,8 +1,8 @@
 package NumberGame.controller;
 
-import NumberGame.data.NumberGuessGameDao;
 import NumberGame.models.GameData;
 import NumberGame.models.RoundData;
+import NumberGame.service.NumberGuessGameService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,25 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/numbergame")
 public class NumberGuessGameController {
     // Create DAO object
-    private final NumberGuessGameDao dao;
+    private final NumberGuessGameService service;
     
     // Constructor for Dependency Injection
-    public NumberGuessGameController(NumberGuessGameDao dao){
-        this.dao = dao;
+    public NumberGuessGameController(NumberGuessGameService service){
+        this.service = service;
     }
     
     //testing
     //-------------
     
-    @GetMapping
-    public int test(){
-        return dao.getLastGameId();
-    }
+//    @GetMapping
+//    public int test(){
+//        return service.getLastGameId();
+//    }
 
-    @GetMapping("/newGame")
-    public GameData test0(){
-        return dao.createNewGame();
-    }
+//    @GetMapping("/newGame")
+//    public GameData test0(){
+//        return service.createNewGame();
+//    }
     
     //---------------
     
@@ -49,7 +49,7 @@ public class NumberGuessGameController {
     public String BeginGame() {
         
         //create integer game id value
-        int retId = dao.createNewGame().getGameId();
+        int retId = service.createNewGame();
         
         
         //string output for successful creation of a new game, combined with the most recently created games ID
@@ -76,7 +76,7 @@ public class NumberGuessGameController {
     public RoundData guess(@PathVariable int id, @RequestBody int guess) { //without passing gameid since we know which game we're currently updating
         
         //return the newly created round object
-        return dao.addNewRoundData(id,guess);
+        return service.makeGuess(id,guess);
         
     }
     
@@ -86,7 +86,7 @@ public class NumberGuessGameController {
     //Returns a list of all games. Be sure in-progress games do not display their answer
     @GetMapping("/game")
     public List<GameData> viewAllGames(){
-        return dao.getAllGames();
+        return service.getAllGames();
     }
     
     
@@ -95,7 +95,7 @@ public class NumberGuessGameController {
     //Returns a specific game based on ID. Be sure in-progress games do not display their answer
     @GetMapping("/game/gameid")
     public GameData viewGameById(@RequestBody int id) {
-        return dao.getGameById(id);
+        return service.getGameById(id);
     }
     
     
@@ -104,7 +104,7 @@ public class NumberGuessGameController {
     //Returns a list of rounds for the specified game sorted by time
     @GetMapping("/rounds/gameid")
     public List<RoundData> viewGameRounds(@RequestBody int id) {
-        return dao.getGameRoundsById(id);
+        return service.getAllRounds(id);
     }
     
 }
