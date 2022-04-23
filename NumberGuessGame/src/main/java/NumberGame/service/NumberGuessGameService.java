@@ -32,14 +32,18 @@ public class NumberGuessGameService {
     //make guess method to return a round object to the controller
     public RoundData makeGuess(int id, int guess) {
         
-        RoundData newround;
+        int answer = dao.getAnswerFromId(dao.getGameById(id).getAnswerId());
         
-        //set results using result method ****NICOLE*****need to add new method******NICOLE******
-        newround.setResults();
+        RoundData newround = new RoundData();
         //set user guess using input from controller
         newround.setUserGuess(guess);
         //set local time to now 
         newround.setTimeLog(LocalDate.now());
+        
+        //set results using result method ****NICOLE*****need to add new method******NICOLE******
+        newround.makeResults(answer);
+        
+        dao.addNewRoundData(id, newround);
         
         //return newly created round object
         return newround;
