@@ -7,6 +7,7 @@ package NumberGame.service;
 import NumberGame.data.NumberGuessGameDao;
 import NumberGame.models.GameData;
 import NumberGame.models.RoundData;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -30,7 +31,18 @@ public class NumberGuessGameService {
     
     //make guess method to return a round object to the controller
     public RoundData makeGuess(int id, int guess) {
-        return dao.addNewRoundData(id, guess);
+        
+        RoundData newround;
+        
+        //set results using result method ****NICOLE*****need to add new method******NICOLE******
+        newround.setResults();
+        //set user guess using input from controller
+        newround.setUserGuess(guess);
+        //set local time to now 
+        newround.setTimeLog(LocalDate.now());
+        
+        //return newly created round object
+        return newround;
     }
     
     //return list of games 
