@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class NumberGuessGameService {
     
-    private NumberGuessGameDao dao;
+    private final NumberGuessGameDao dao;
     
     public NumberGuessGameService(NumberGuessGameDao dao) {
         this.dao = dao;
