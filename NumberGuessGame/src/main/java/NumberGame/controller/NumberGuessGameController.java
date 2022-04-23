@@ -1,6 +1,7 @@
 package NumberGame.controller;
 
 import NumberGame.data.NumberGuessGameDao;
+import NumberGame.models.GameData;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,10 @@ public class NumberGuessGameController {
     @GetMapping
     public int test(){
         return dao.getLastGameId();
+    }
+    
+    @GetMapping("/newGame")
+    public GameData test0(){
+        return dao.createNewGame();
     }
 }

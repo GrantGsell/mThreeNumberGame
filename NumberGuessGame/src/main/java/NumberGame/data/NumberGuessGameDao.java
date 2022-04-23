@@ -21,7 +21,7 @@ public interface NumberGuessGameDao {
      *   then be used to select a corresponding four digit number from the 
      *   All possible answers table
      * 
-     * @return 
+     * @return the newly created instance of GameData with is associated id.
      */
     GameData createNewGame();
     
