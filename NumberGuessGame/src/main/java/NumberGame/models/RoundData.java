@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Grant
+ * @author Grant / SPENCER
  */
 public class RoundData {
     // Fields
@@ -12,6 +12,19 @@ public class RoundData {
     private int userGuess;
     private String results;
     private LocalDate timeLog;
+    
+    
+    
+    //constructor
+    
+    //need to fix this so that it passes in a properly formatted LocalDate object
+    public RoundData(int id, int guess, String results, LocalDate time){
+        this.roundDataId = id;
+        this.userGuess = guess;
+        this.results = results;
+        this.timeLog = time; 
+    }
+    
     
     // Field Setters
     public void setRoundDataId(int roundDataId) {
