@@ -4,12 +4,12 @@ import NumberGame.models.GameData;
 import NumberGame.models.RoundData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -56,7 +56,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         // Create a new GameData object and set fields
         GameData newGame = new GameData();
         newGame.setGameId(lastGameId + 1);
-        //newGame.setAnswerId(answerId);
+        newGame.setAnswerId(answerId);
         newGame.setAnswerId(1);
         newGame.setGameWon(false);
         
@@ -95,33 +95,121 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
     }
 
     
+    /**
+     * Obtains a list of all Game objects, which contains Game Ids, and if the 
+     *   game is finished (won) or not.
+     * 
+     * @return A list of Game objects
+     */
     @Override
     public List<GameData> getAllGames() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Create a statement string
+        final String sql = "SELECT * FROM Games";
+        
+        // Declare a list to hold all of the game data
+        List<GameData> allGames;
+        
+        // Obtain a list of all games
+        allGames = jdbcTemplate.query(sql, new GameDataMapper());
+        
+        // Return the list of all Games
+        return allGames;
     }
 
-    
+
+    /**
+     * Adds round data to the RoundData table. First obtains the id of the last
+     *   round to be played and increments it by 1 to create a roundId for this
+     *   new round. Data is then placed into the RoundData table, after which 
+     *   the new roundId and provided gameId data are placed in the rounds
+     *   bridge table.
+     * 
+     * @param gameId the id for the associated game.
+     */
     @Override
-    public void addNewRoundData(int gameId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void addNewRoundData(int gameId, RoundData roundData) {
+        // Create variable for id of the last round played
+        int roundId = getLastRoundId() + 1;
+        
+        // Set roundId for roundData object
+        roundData.setRoundDataId(roundId);
+        
+        // Create sql statement for RoundData table
+        final String sql0 = "INSERT INTO RoundData(roundDataId, userGuess, "
+                + "results, timeLog) VALUES(?, ?, ?);";
+        
+        // Execute the roundData table statement
+        jdbcTemplate.update(sql0, roundData.getRoundDataId(), 
+                roundData.getUserGuess(), roundData.getResults(), roundData.getTimeLog());
+        
+        // Create sql statement for rounds table
+        final String sql1 = "INSERT INTO Ronuds(roundDataId, gameId) "
+                + "VALUES(?, ?)";
+        
+        // Execute the rounds table statement
+        jdbcTemplate.update(sql1, gameId, roundData.getRoundDataId());
     }
 
     
+    /**
+     * Obtains the id for the last round played. If this is the first round the 
+     *   method will return null. Otherwise it will return the integer id of the
+     *   last round played.
+     * 
+     * @return 
+     */
     @Override
     public int getLastRoundId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Create statement string
+        final String sql = "SELECT * FROM Rounds ORDER BY RoundDataId DESC LIMIT 1";
+        
+        // Obtain round id for the last round played (single elment list)
+        List<Integer> roundId;
+        roundId = jdbcTemplate.query(sql, new RoundIdMapper());
+
+        // Return the GameId for the last game object
+        return roundId.get(0);
     }
 
     
     @Override
     public GameData getGameById(int gameId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Create sql statement
+        final String sql = "SELECT * FROM Games WHERE gameId = " + gameId + ";";
+        
+        // Create List to hold all RoundData Objects
+        List<GameData> results;
+        
+        // Execute the query to obtain single elment list
+        results = jdbcTemplate.query(sql, new GameDataMapper());
+   
+        // Return the results list
+        return results.get(0);
     }
 
     
+    /**
+     * Obtains a list of all round data objects associated with the given 
+     *   gameId.
+     * 
+     * @param gameId the id of the GameData object whose rounds we want to see.
+     * @return a list of RoundData objects containing the data associated with
+     *   each round of the game specified by gameId.
+     */
     @Override
     public List<RoundData> getAllRoundsOneGame(int gameId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Create sql statement
+        final String sql = "SELECT * FROM Rounds INNER JOIN RoundData "
+                + "USING(roundDataId) WHERE gameId = " + gameId + ";";
+        
+        // Create List to hold all RoundData Objects
+        List<RoundData> results;
+        
+        // Execute the query 
+        results = jdbcTemplate.query(sql, new RoundDataMapper());
+   
+        // Return the results list
+        return results;
     }
     
     
@@ -140,6 +228,50 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
             return game;
         }
         
+    }
+    
+    
+    /**
+     * Creates mapping class to map MySQL rounds data table into a single
+     *   output value for roundsId
+     */
+    private static final class RoundIdMapper implements RowMapper<Integer>{
+
+        @Override
+        public Integer mapRow(ResultSet rs, int i) throws SQLException {
+            // Create new variable to hold round id data
+            int roundId;
+            
+            // Read in the round id from the result set object
+            roundId = rs.getInt("roundDataId");
+            
+            // Return the roundId
+            return roundId;
+        }
+        
+    }
+    
+    
+    /**
+     * Creates a mapping class to map MySQL RoundData table into a list of
+     *   RoundData objects
+     */
+    private static final class RoundDataMapper implements RowMapper<RoundData>{
+
+        @Override
+        public RoundData mapRow(ResultSet rs, int i) throws SQLException {
+            // Create new object to hold RoundData 
+            RoundData roundData = new RoundData();
+            
+            // Populate the fields of roundData
+            roundData.setRoundDataId(rs.getInt("roundDataId"));
+            roundData.setUserGuess(rs.getInt("userGuess"));
+            roundData.setResults(rs.getString("results"));
+            roundData.setTimeLog(rs.getDate("timeLog").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            
+            // Return the roundData object
+            return roundData;
+        }
     }
     
     

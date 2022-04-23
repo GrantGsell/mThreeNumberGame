@@ -54,7 +54,7 @@ public interface NumberGuessGameDao {
      * 
      * @param gameId the id for the associated game.
      */
-    void addNewRoundData(int gameId);
+    void addNewRoundData(int gameId, RoundData roundData);
     
     /**
      * Obtains the id for the last round played. If this is the first round the 
@@ -78,8 +78,7 @@ public interface NumberGuessGameDao {
      * Obtains a list of all round data objects associated with the given 
      *   gameId.
      * 
-     * @param gameId the id of the GameData object whose rounds we want 
-   to see.
+     * @param gameId the id of the GameData object whose rounds we want to see.
      * @return a list of RoundData objects containing the data associated with
      *   each round of the game specified by gameId.
      */
