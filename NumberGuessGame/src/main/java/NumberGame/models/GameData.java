@@ -4,15 +4,24 @@
  */
 package NumberGame.models;
 
+import java.util.List;
+import NumberGame.models.RoundData;
+
 /**
  *
- * @author Grant
+ * @author Grant / SPENCER
  */
 public class GameData {
     private int gameId;
     private int answerId;
     private boolean gameWon;
+    
+    private List<RoundData> rounds;
+    private int numRounds;
 
+    //constructor
+    //not necessary???
+    
     // Field Getters
     public int getGameId() {
         return gameId;
@@ -37,6 +46,17 @@ public class GameData {
     
     public void setGameWon(boolean gameWon){
         this.gameWon = gameWon;
+    }
+    
+    //method to get the list of rounds for this game object
+    public List<RoundData> getRounds() {
+        return rounds;
+    }
+    
+    //method to add a round to the list of rounds for this game object
+    public void addRound(RoundData newRound) {
+        rounds.add(newRound);
+        numRounds++;
     }
     
     
