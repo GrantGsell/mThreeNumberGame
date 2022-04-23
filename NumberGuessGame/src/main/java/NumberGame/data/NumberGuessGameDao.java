@@ -23,7 +23,7 @@ public interface NumberGuessGameDao {
      * 
      * @return the newly created instance of GameData with is associated id.
      */
-    GameData createNewGame();
+    int createNewGame();
     
     
     /**
@@ -83,5 +83,15 @@ public interface NumberGuessGameDao {
      *   each round of the game specified by gameId.
      */
     List<RoundData> getAllRoundsOneGame(int gameId);
+    
+    
+    /**
+     * Obtains the four digit answer associated with the given id.
+     * 
+     * @param answerId, the id that is associated with some four digit number
+     *   from the AllPossibleAnswers table.
+     * @return the four digit number that is associated with the given answerId.
+     */
+    int getAnswerFromId(int answerId);
     
 }

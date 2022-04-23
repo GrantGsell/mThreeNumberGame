@@ -43,7 +43,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return the newly created instance of GameData with is associated id.
      */
     @Override
-    public GameData createNewGame() {
+    public int createNewGame() {
         // Create variables for lastGameId, answerId
         int lastGameId, answerId;
         
@@ -68,7 +68,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         jdbcTemplate.update(sql, newGame.getGameId(), newGame.getAnswerId(), 
                 newGame.getGameWon());
         
-        return newGame;
+        return newGame.getGameId();
     }
 
     
@@ -136,7 +136,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         
         // Create sql statement for RoundData table
         final String sql0 = "INSERT INTO RoundData(roundDataId, userGuess, "
-                + "results, timeLog) VALUES(?, ?, ?);";
+                + "results, timeLog) VALUES(?, ?, ?, ?);";
         
         // Execute the roundData table statement
         jdbcTemplate.update(sql0, roundData.getRoundDataId(), 
@@ -172,6 +172,13 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
     }
 
     
+    /**
+     * Obtains a game object based on its game id.
+     * 
+     * @param gameId the associated id for the GameData object.
+     * @return the GameData object associated with gameId if it exists otherwise
+     * null.
+     */
     @Override
     public GameData getGameById(int gameId) {
         // Create sql statement
@@ -212,6 +219,13 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         return results;
     }
 
+    
+    /**
+     * Obtains the four digit answer associated with the given id.
+     * 
+     * @param answerId correlates to a four digit number.
+     * @return the four digit number associated with the id.
+     */
     @Override
     public int getAnswerFromId(int answerId) {
         // Create sql statement
