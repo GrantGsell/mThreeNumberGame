@@ -87,6 +87,10 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         // Obtain GameData object for the last game played,(single element list)
         List<GameData> lastGameList = jdbcTemplate.query(sql, new GameDataMapper());
         
+        // Check to see if lastGameList has a size of 0
+        if(lastGameList.size() == 0)
+            return 0;
+        
         // Get the last GameData object
         GameData lastGame = lastGameList.get(0);
         
