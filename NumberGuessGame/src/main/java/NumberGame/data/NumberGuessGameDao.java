@@ -23,7 +23,7 @@ public interface NumberGuessGameDao {
      * 
      * @return the newly created instance of GameData with is associated id.
      */
-    int createNewGame();
+    int createNewGame() throws NumberGuessGameDaoException ;
     
     
     /**
@@ -33,7 +33,7 @@ public interface NumberGuessGameDao {
      * 
      * @return 
      */
-    int getLastGameId();
+    int getLastGameId() throws NumberGuessGameDaoException ;
     
     
     /**
@@ -42,7 +42,7 @@ public interface NumberGuessGameDao {
      * 
      * @return A list of Game objects
      */
-    List<GameData> getAllGames();
+    List<GameData> getAllGames() throws NumberGuessGameDaoException ;
     
     
     /**
@@ -54,7 +54,7 @@ public interface NumberGuessGameDao {
      * 
      * @param gameId the id for the associated game.
      */
-    void addNewRoundData(int gameId, RoundData roundData);
+    void addNewRoundData(int gameId, RoundData roundData) throws NumberGuessGameDaoException ;
     
     /**
      * Obtains the id for the last round played. If this is the first round the 
@@ -63,7 +63,7 @@ public interface NumberGuessGameDao {
      * 
      * @return 
      */
-    int getLastRoundId();
+    int getLastRoundId() throws NumberGuessGameDaoException ;
     
     /**
      * Obtains a game object based on its game id.
@@ -72,7 +72,7 @@ public interface NumberGuessGameDao {
      * @return the GameData object associated with gameId if it exists otherwise
      * null.
      */
-    GameData getGameById(int gameId);
+    GameData getGameById(int gameId) throws NumberGuessGameDaoException ;
     
     /**
      * Obtains a list of all round data objects associated with the given 
@@ -82,7 +82,7 @@ public interface NumberGuessGameDao {
      * @return a list of RoundData objects containing the data associated with
      *   each round of the game specified by gameId.
      */
-    List<RoundData> getAllRoundsOneGame(int gameId);
+    List<RoundData> getAllRoundsOneGame(int gameId) throws NumberGuessGameDaoException;
     
     
     /**
@@ -92,6 +92,6 @@ public interface NumberGuessGameDao {
      *   from the AllPossibleAnswers table.
      * @return the four digit number that is associated with the given answerId.
      */
-    int getAnswerFromId(int answerId);
+    int getAnswerFromId(int answerId) throws NumberGuessGameDaoException;
     
 }
