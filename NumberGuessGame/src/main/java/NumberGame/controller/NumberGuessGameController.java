@@ -93,7 +93,7 @@ public class NumberGuessGameController {
     //spencer
     //GAME/GAMEID (GET METHOD)
     //Returns a specific game based on ID. Be sure in-progress games do not display their answer
-    @GetMapping("/game/gameid")
+    @GetMapping("/game/{gameid}")
     public GameData viewGameById(@RequestBody int id) {
         return service.getGameById(id);
     }
@@ -102,7 +102,7 @@ public class NumberGuessGameController {
     //spencer
     //ROUNDS/GAMEID (GET METHOD)
     //Returns a list of rounds for the specified game sorted by time
-    @GetMapping("/rounds/gameid")
+    @GetMapping("/rounds/{gameid}")
     public List<RoundData> viewGameRounds(@RequestBody int id) {
         return service.getAllRounds(id);
     }
