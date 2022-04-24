@@ -69,8 +69,8 @@ public interface NumberGuessGameDao {
      * Obtains a game object based on its game id.
      * 
      * @param gameId the associated id for the GameData object.
-     * @return the GameData object associated with gameId if it exists
-   otherwise null.
+     * @return the GameData object associated with gameId if it exists otherwise
+     * null.
      */
     GameData getGameById(int gameId);
     

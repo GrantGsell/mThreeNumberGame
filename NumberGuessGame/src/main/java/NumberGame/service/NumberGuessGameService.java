@@ -9,11 +9,13 @@ import NumberGame.models.GameData;
 import NumberGame.models.RoundData;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author SPENCER
  */
+@Component
 public class NumberGuessGameService {
     
     private final NumberGuessGameDao dao;
