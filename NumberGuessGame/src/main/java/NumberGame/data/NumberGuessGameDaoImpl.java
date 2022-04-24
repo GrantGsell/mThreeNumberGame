@@ -43,7 +43,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return the newly created instance of GameData with is associated id.
      */
     @Override
-    public int createNewGame() {
+    public int createNewGame() throws NumberGuessGameDaoException {
         // Create variables for lastGameId, answerId
         int lastGameId, answerId;
         
@@ -80,7 +80,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return 
      */
     @Override
-    public int getLastGameId() {
+    public int getLastGameId() throws NumberGuessGameDaoException {
         // Create statement string
         final String sql = "SELECT * FROM Games ORDER BY gameId DESC LIMIT 1";
         
@@ -106,7 +106,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return A list of Game objects
      */
     @Override
-    public List<GameData> getAllGames() {
+    public List<GameData> getAllGames() throws NumberGuessGameDaoException {
         // Create a statement string
         final String sql = "SELECT * FROM Games";
         
@@ -131,7 +131,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @param gameId the id for the associated game.
      */
     @Override
-    public void addNewRoundData(int gameId, RoundData roundData) {
+    public void addNewRoundData(int gameId, RoundData roundData) throws NumberGuessGameDaoException {
         // Create variable for id of the last round played
         int roundId = getLastRoundId() + 1;
         
@@ -163,7 +163,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return 
      */
     @Override
-    public int getLastRoundId() {
+    public int getLastRoundId() throws NumberGuessGameDaoException {
         // Create statement string
         final String sql = "SELECT * FROM Rounds ORDER BY RoundDataId DESC LIMIT 1";
         
@@ -184,7 +184,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * null.
      */
     @Override
-    public GameData getGameById(int gameId) {
+    public GameData getGameById(int gameId) throws NumberGuessGameDaoException {
         // Create sql statement
         final String sql = "SELECT * FROM Games WHERE gameId = " + gameId + ";";
         
@@ -208,7 +208,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      *   each round of the game specified by gameId.
      */
     @Override
-    public List<RoundData> getAllRoundsOneGame(int gameId) {
+    public List<RoundData> getAllRoundsOneGame(int gameId) throws NumberGuessGameDaoException {
         // Create sql statement
         final String sql = "SELECT * FROM Rounds INNER JOIN RoundData "
                 + "USING(roundDataId) WHERE gameId = " + gameId + ";";
@@ -231,7 +231,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
      * @return the four digit number associated with the id.
      */
     @Override
-    public int getAnswerFromId(int answerId) {
+    public int getAnswerFromId(int answerId) throws NumberGuessGameDaoException {
         // Create sql statement
         final String sql = "SELECT * FROM AllPossibleAnswers WHERE answerId = "
                 + answerId + ";";
