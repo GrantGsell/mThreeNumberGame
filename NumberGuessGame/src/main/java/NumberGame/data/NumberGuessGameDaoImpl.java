@@ -147,7 +147,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
                 roundData.getUserGuess(), roundData.getResults(), roundData.getTimeLog());
         
         // Create sql statement for rounds table
-        final String sql1 = "INSERT INTO Ronuds(roundDataId, gameId) "
+        final String sql1 = "INSERT INTO Rounds(roundDataId, gameId) "
                 + "VALUES(?, ?)";
         
         // Execute the rounds table statement
