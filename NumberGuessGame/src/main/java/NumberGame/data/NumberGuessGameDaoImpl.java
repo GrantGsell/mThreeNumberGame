@@ -170,6 +170,11 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         // Obtain round id for the last round played (single elment list)
         List<Integer> roundId;
         roundId = jdbcTemplate.query(sql, new RoundIdMapper());
+        
+        // Check to see if roundId has a size of 0
+        if(roundId.size() == 0)
+            return 0;
+        
 
         // Return the GameId for the last game object
         return roundId.get(0);
