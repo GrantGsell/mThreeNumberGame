@@ -57,7 +57,6 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         GameData newGame = new GameData();
         newGame.setGameId(lastGameId + 1);
         newGame.setAnswerId(answerId);
-        newGame.setAnswerId(1);
         newGame.setGameWon(false);
         
         // Create statement string
