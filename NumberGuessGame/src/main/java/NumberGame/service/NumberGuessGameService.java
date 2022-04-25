@@ -32,6 +32,12 @@ public class NumberGuessGameService {
         return dao.createNewGame();
     }
     
+    //service method for checking validity of a guess
+    public boolean checkGuess(int guess) throws NumberGuessGameDaoException {
+        String guessToCheck = Integer.toString(guess);
+        return dao.isReasonableGuess(guessToCheck);
+    }
+    
     //make guess method to return a round object to the controller
     public RoundData makeGuess(int id, int guess) throws NumberGuessGameDaoException {
         
