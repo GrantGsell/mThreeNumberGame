@@ -73,10 +73,10 @@ public class NumberGuessGameController {
     //we return the newly created round object
     
     @PostMapping("/guess")
-    public RoundData guess(@PathVariable int id, @RequestBody int guess) { //without passing gameid since we know which game we're currently updating
+    public RoundData guess(@RequestBody Guess guess) throws NumberGuessGameDaoException { //without passing gameid since we know which game we're currently updating
         
         //return the newly created round object
-        return service.makeGuess(id,guess);
+        return service.makeGuess(guess.getId(),guess.getGuess());
         
     }
     
