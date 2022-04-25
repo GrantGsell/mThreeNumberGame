@@ -266,8 +266,12 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
             ret = false;
         } else {
             char[] charArr = value.toCharArray();
-            if(Stream.of(charArr).distinct().count() != 4) {
-                ret = false;
+            for(int i = 0; i < 4; i++) {
+                for(int j = i+1; j < 4; j++) {
+                    if(charArr[i]==charArr[j]) {
+                        ret = false;
+                    } 
+                }
             }
         }
         return ret;
