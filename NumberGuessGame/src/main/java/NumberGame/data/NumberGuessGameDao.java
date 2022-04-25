@@ -94,7 +94,17 @@ public interface NumberGuessGameDao {
      */
     int getAnswerFromId(int answerId) throws NumberGuessGameDaoException;
     
+    
+    /**
+     * 
+     * @param gameId
+     * @return
+     * @throws NumberGuessGameDaoException 
+     */
+    GameData updateGameWonStatus(int gameId)throws NumberGuessGameDaoException;  
+
+    
     //spencer
-    boolean isReasonableGuess(int guess) throws NumberGuessGameDaoException;
+    boolean isReasonableGuess(String guess) throws NumberGuessGameDaoException;
     
 }

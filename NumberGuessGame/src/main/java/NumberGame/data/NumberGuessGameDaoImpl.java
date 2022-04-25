@@ -259,7 +259,6 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
     //no duplicate entries
     //true = number is ok
     //false = number invalid
-    /*
     @Override
     public boolean isReasonableGuess(String value) throws NumberGuessGameDaoException {
         //create boolean initially set to true for return value
@@ -279,7 +278,6 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         }
         return ret;
     }
-    */
     
     /*
     @Override
@@ -301,6 +299,29 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         return digits.size() == 4;
     }
     */
+
+    
+    /**
+     * 
+     * @param gameId
+     * @return
+     * @throws NumberGuessGameDaoException 
+     */
+    @Override
+    public GameData updateGameWonStatus(int gameId) throws NumberGuessGameDaoException {
+        // Create sql statement
+        final String sql = "Update Games SET gameWon = true WHERE gameId = " 
+                + gameId + ";";
+        
+        // Execute the statement
+        jdbcTemplate.update(sql);
+        
+        // Obtain the newly updated game object
+        GameData updatedGame = getGameById(gameId);
+        
+        // Return the updated game
+        return updatedGame;
+    }
     
     
     /**
