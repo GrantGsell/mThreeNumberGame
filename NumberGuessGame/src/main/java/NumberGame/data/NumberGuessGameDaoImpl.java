@@ -150,7 +150,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
                 + "VALUES(?, ?)";
         
         // Execute the rounds table statement
-        jdbcTemplate.update(sql1, gameId, roundData.getRoundDataId());
+        jdbcTemplate.update(sql1, roundData.getRoundDataId(), gameId);
     }
 
     
