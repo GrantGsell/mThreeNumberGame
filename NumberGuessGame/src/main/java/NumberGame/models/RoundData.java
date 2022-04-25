@@ -12,24 +12,7 @@ public class RoundData {
     private int roundDataId;
     private int userGuess;
     private String results;
-    private LocalDate timeLog;
-    
-    
-    
-    //constructors
-    
-    public RoundData() {
-        
-    }
-    
-    //need to fix this so that it passes in a properly formatted LocalDate object
-    public RoundData(int id, int guess, String results, LocalDate time){
-        this.roundDataId = id;
-        this.userGuess = guess;
-        this.results = results;
-        this.timeLog = time; 
-    }
-    
+    private LocalDate timeLog;    
     
     // Field Setters
     public void setRoundDataId(int roundDataId) {
@@ -98,6 +81,7 @@ public class RoundData {
         return ret;
     }
 
+    
     /**
      * Compares the userGuess to the answer number to find the number of partial
      *   and exact matches.
@@ -107,22 +91,10 @@ public class RoundData {
      */
     public String compareGuessToResults(int answer){       
         // Turn the answer into a HashSet of digits
-        HashSet<Integer> digits = new HashSet<>();
+        HashSet<Integer> digits = extractDigits(answer);
         
         // Create variables to hold exact, partial count
-        int exact = 0, partial = 0;
-        
-        // Loop through and extract digits and adding to set
-        while(answer > 0){
-            // Extract the digit
-            int digit = answer % 10;
-            
-            // Add digit to HashSet
-            digits.add(digit);
-            
-            // Decrease answer by a factor of 10;
-            answer /= 10;
-        }
+        int exact = 0, partial = 0; 
         
         // Loop through answer,guess and compare digits
         while(answer > 0){
@@ -145,5 +117,35 @@ public class RoundData {
         String result = "e:" + exact + "p:" + partial;
         
         return result;
+    }
+    
+    
+    /**
+     * Takes an integer, then extract and store each of its digits into a
+     *   HashSet. On each iteration of the while loop the ones digit is stripped
+     *   from the number value, stores that digit into the results set, and then
+     *   reduces the number variable by a factor of 10 for the next loop 
+     *   iteration.
+     * 
+     * @param number the number whose digits will be extracted.
+     * @return A hashset containing the individual digits of the input number.
+     */
+    private HashSet<Integer> extractDigits(int number){
+        // Create results hashset
+        HashSet<Integer> results = new HashSet<>();
+        
+        // Loop through and extract digits and adding to set
+        while(number > 0){
+            // Extract the digit
+            int digit = number % 10;
+            
+            // Add digit to HashSet
+            results.add(digit);
+            
+            // Decrease answer by a factor of 10;
+            number /= 10;
+        }
+        // Return results hashset
+        return results;
     }
 }
