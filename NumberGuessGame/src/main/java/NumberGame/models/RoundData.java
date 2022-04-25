@@ -105,7 +105,7 @@ public class RoundData {
      * @param answer, the answer for this game.
      * @return A string denoting the number of exact and partial values.
      */
-    public String compareGuessToResults(int answer){
+    public String compareGuessToResults(int answer){       
         // Turn the answer into a HashSet of digits
         HashSet<Integer> digits = new HashSet<>();
         
@@ -125,7 +125,7 @@ public class RoundData {
         }
         
         // Loop through answer,guess and compare digits
-        for(int i = 0; i < 4; i++){
+        while(answer > 0){
             // Extract the respective digits
             int answerDig = answer % 10;
             int guessDig = userGuess % 10;
@@ -136,6 +136,10 @@ public class RoundData {
             // Look for the digit in set
             else if(digits.contains(guessDig))
                 partial++;
+            
+            // Decrement the answer, guess by a factor of 10 to get the next digit
+            answer /= 10;
+            userGuess /= 10;
         }
         // Create return string
         String result = "e:" + exact + "p:" + partial;
