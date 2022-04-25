@@ -1,6 +1,7 @@
 package NumberGame.models;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 /**
  *
@@ -97,5 +98,48 @@ public class RoundData {
         return ret;
     }
 
-    
+    /**
+     * Compares the userGuess to the answer number to find the number of partial
+     *   and exact matches.
+     * 
+     * @param answer, the answer for this game.
+     * @return A string denoting the number of exact and partial values.
+     */
+    public String compareGuessToResults(int answer){
+        // Turn the answer into a HashSet of digits
+        HashSet<Integer> digits = new HashSet<>();
+        
+        // Create variables to hold exact, partial count
+        int exact = 0, partial = 0;
+        
+        // Loop through and extract digits and adding to set
+        while(answer > 0){
+            // Extract the digit
+            int digit = answer % 10;
+            
+            // Add digit to HashSet
+            digits.add(digit);
+            
+            // Decrease answer by a factor of 10;
+            answer /= 10;
+        }
+        
+        // Loop through answer,guess and compare digits
+        for(int i = 0; i < 4; i++){
+            // Extract the respective digits
+            int answerDig = answer % 10;
+            int guessDig = userGuess % 10;
+            
+            // Compare the two digits for exactness
+            if(answerDig == guessDig)
+                exact++;    
+            // Look for the digit in set
+            else if(digits.contains(guessDig))
+                partial++;
+        }
+        // Create return string
+        String result = "e:" + exact + "p:" + partial;
+        
+        return result;
+    }
 }
