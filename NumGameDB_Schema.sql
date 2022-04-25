@@ -35,6 +35,7 @@ CREATE TABLE Rounds(
         REFERENCES roundData(roundDataId)
 );
 
+SELECT * FROM AllPossibleAnswers;
 
 /*
 SELECT * FROM Games;
@@ -57,7 +58,6 @@ VALUES(2, 0004, "e:0:p:0", "2010-12-31 01:15:00");
 
 INSERT INTO Games(gameId, answerId, gameWon)
 VALUES(0, 1, false);
-
 
 INSERT INTO Rounds(roundDataId, gameId) 
 VALUES(0, 1);
