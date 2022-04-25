@@ -75,9 +75,15 @@ public class NumberGuessGameController {
     
     @PostMapping("/guess")
     public RoundData guess(@RequestBody Guess guess) throws NumberGuessGameDaoException { //without passing gameid since we know which game we're currently updating
-        
-        //return the newly created round object
-        return service.makeGuess(guess.getId(),guess.getGuess());
+        //check for invalid guess
+        if(!service.checkGuess(guess.getGuess())){
+            //print error message
+            System.out.println("Error due to invalid user guess");
+            return null;
+        } else {
+            //return guess if input is valid
+            return service.makeGuess(guess.getId(),guess.getGuess());
+        }
         
     }
     
