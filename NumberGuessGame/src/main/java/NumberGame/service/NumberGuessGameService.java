@@ -5,6 +5,7 @@
 package NumberGame.service;
 
 import NumberGame.data.NumberGuessGameDao;
+import NumberGame.data.NumberGuessGameDaoException;
 import NumberGame.models.GameData;
 import NumberGame.models.RoundData;
 import java.time.LocalDate;
@@ -25,14 +26,14 @@ public class NumberGuessGameService {
     }
     
     //create new game uses the dao create new game method and uses the returned gameId
-    public int createNewGame() {
+    public int createNewGame() throws NumberGuessGameDaoException {
         
         //create new game returns a game id to be used in the controller
         return dao.createNewGame();
     }
     
     //make guess method to return a round object to the controller
-    public RoundData makeGuess(int id, int guess) {
+    public RoundData makeGuess(int id, int guess) throws NumberGuessGameDaoException {
         
         int answer = dao.getAnswerFromId(dao.getGameById(id).getAnswerId());
         
@@ -52,19 +53,19 @@ public class NumberGuessGameService {
     }
     
     //return list of games 
-    public List<GameData> getAllGames() {
+    public List<GameData> getAllGames() throws NumberGuessGameDaoException {
         return dao.getAllGames();
     }
     
     
     //return game by id
-    public GameData getGameById(int id) {
+    public GameData getGameById(int id) throws NumberGuessGameDaoException {
         return dao.getGameById(id);
     }
     
     
     //return list of rounds by game id
-    public List<RoundData> getAllRounds(int id) {
+    public List<RoundData> getAllRounds(int id) throws NumberGuessGameDaoException {
         return dao.getAllRoundsOneGame(id);
     }
     
