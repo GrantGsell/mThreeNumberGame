@@ -250,6 +250,29 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         return results.get(0);
     }
     
+    //spencer
+    //HELP METHOD TO CHECK USER GUESS INPUT
+    //THIS HELPER MAKES SURE THE GUESS HAS THE FOLLOWING:
+    //4 total integers
+    //no duplicate entries
+    //true = number is ok
+    //false = number invalid
+    @Override
+    public boolean isReasonableGuess(String value) throws NumberGuessGameDaoException {
+        //create boolean initially set to true for return value
+        boolean ret = true;
+        //check for length more than or less than 4
+        if(value.length() != 4) {
+            ret = false;
+        } else {
+            char[] charArr = value.toCharArray();
+            if(Stream.of(charArr).distinct().count() != 4) {
+                ret = false;
+            }
+        }
+        return ret;
+    }
+    
     
     /**
      * Creates mapping class to map MySQL data from table into NumberGuessGame 
