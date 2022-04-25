@@ -109,7 +109,7 @@ public class NumberGuessGameController {
     //spencer
     //ROUNDS/GAMEID (GET METHOD)
     //Returns a list of rounds for the specified game sorted by time
-    @GetMapping("/rounds/{gameid}")
+    @GetMapping("/rounds")
     public List<RoundData> viewGameRounds(@RequestBody int id) throws NumberGuessGameDaoException{
         return service.getAllRounds(id);
     }

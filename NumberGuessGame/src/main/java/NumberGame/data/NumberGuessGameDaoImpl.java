@@ -398,7 +398,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
             roundData.setRoundDataId(rs.getInt("roundDataId"));
             roundData.setUserGuess(rs.getInt("userGuess"));
             roundData.setResults(rs.getString("results"));
-            roundData.setTimeLog(rs.getDate("timeLog").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            roundData.setTimeLog(rs.getDate("timeLog").toLocalDate());
             
             // Return the roundData object
             return roundData;

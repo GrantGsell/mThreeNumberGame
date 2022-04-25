@@ -55,11 +55,8 @@ public class NumberGuessGameService {
         dao.addNewRoundData(id, newround);
         
         // Check guess is equals answer
-        if(guess == answer){
-            dao.updateGameWonStatus(id);
-            //GameData currentGame = dao.getGameById(id);
-            //currentGame.setGameWon(true);
-        }
+        if(guess == answer)
+            dao.updateGameWonStatus(id); 
         
         //return newly created round object
         return newround;
