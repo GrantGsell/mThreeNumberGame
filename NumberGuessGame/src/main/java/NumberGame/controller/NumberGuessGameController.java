@@ -1,11 +1,12 @@
 package NumberGame.controller;
 
+import NumberGame.data.NumberGuessGameDaoException;
 import NumberGame.models.GameData;
+import NumberGame.models.Guess;
 import NumberGame.models.RoundData;
 import NumberGame.service.NumberGuessGameService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,7 @@ public class NumberGuessGameController {
     //Starts a game, generates an answer, and sets the correct status. Should return a 201
     //CREATED message as well as the created gameId
     @PostMapping("/begin")
-    public String BeginGame() {
+    public String BeginGame() throws NumberGuessGameDaoException{
         
         //create integer game id value
         int retId = service.createNewGame();
@@ -85,7 +86,7 @@ public class NumberGuessGameController {
     //GAME (GET METHOD)
     //Returns a list of all games. Be sure in-progress games do not display their answer
     @GetMapping("/game")
-    public List<GameData> viewAllGames(){
+    public List<GameData> viewAllGames() throws NumberGuessGameDaoException{
         return service.getAllGames();
     }
     
@@ -94,7 +95,7 @@ public class NumberGuessGameController {
     //GAME/GAMEID (GET METHOD)
     //Returns a specific game based on ID. Be sure in-progress games do not display their answer
     @GetMapping("/game/{gameid}")
-    public GameData viewGameById(@RequestBody int id) {
+    public GameData viewGameById(@RequestBody int id) throws NumberGuessGameDaoException{
         return service.getGameById(id);
     }
     
@@ -103,7 +104,7 @@ public class NumberGuessGameController {
     //ROUNDS/GAMEID (GET METHOD)
     //Returns a list of rounds for the specified game sorted by time
     @GetMapping("/rounds/{gameid}")
-    public List<RoundData> viewGameRounds(@RequestBody int id) {
+    public List<RoundData> viewGameRounds(@RequestBody int id) throws NumberGuessGameDaoException{
         return service.getAllRounds(id);
     }
     
