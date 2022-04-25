@@ -34,8 +34,8 @@ public class NumberGuessGameService {
     
     //service method for checking validity of a guess
     public boolean checkGuess(int guess) throws NumberGuessGameDaoException {
-        String guessToCheck = Integer.toString(guess);
-        return dao.isReasonableGuess(guessToCheck);
+        //String guessToCheck = Integer.toString(guess);
+        return dao.isReasonableGuess(guess);
     }
     
     //make guess method to return a round object to the controller

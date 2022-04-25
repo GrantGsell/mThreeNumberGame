@@ -5,8 +5,10 @@ import NumberGame.models.RoundData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -257,6 +259,7 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
     //no duplicate entries
     //true = number is ok
     //false = number invalid
+    /*
     @Override
     public boolean isReasonableGuess(String value) throws NumberGuessGameDaoException {
         //create boolean initially set to true for return value
@@ -272,6 +275,28 @@ public class NumberGuessGameDaoImpl implements NumberGuessGameDao{
         }
         return ret;
     }
+    */
+    
+    /*
+    @Override
+    public boolean isReasonableGuess(int value) throws NumberGuessGameDaoException {
+        // Create a hashset to hold all digits
+        HashSet<Integer> digits = new HashSet<Integer>();
+        
+        // Extract each last digit, add to set and reduce value by a factor of 10
+        while(value > 0){
+            // Get digit
+            int digit = value % 10;
+            
+            // Add new digit to set
+            digits.add(digit);
+            
+            // Reduce by a factor of 10
+            value /= 10;
+        }
+        return digits.size() == 4;
+    }
+    */
     
     
     /**
